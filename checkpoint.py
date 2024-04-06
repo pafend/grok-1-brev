@@ -41,12 +41,12 @@ sys.modules['__main__'].QuantizedWeight8bit = QuantizedWeight8bit
 
 @contextlib.contextmanager
 def copy_to_shm(file: str):
-    if file.startswith("/dev/shm/"):
+    if file.startswith("/data/tmp/"):
         # Nothing to do, the file is already in shared memory.
         yield file
         return
 
-    tmp_dir = "/dev/shm/"
+    tmp_dir = "/data/tmp/"
     fd, tmp_path = tempfile.mkstemp(dir=tmp_dir)
     try:
         shutil.copyfile(file, tmp_path)
@@ -58,7 +58,7 @@ def copy_to_shm(file: str):
 
 @contextlib.contextmanager
 def copy_from_shm(file: str):
-    tmp_dir = "/dev/shm/"
+    tmp_dir = "/data/tmp/"
     fd, tmp_path = tempfile.mkstemp(dir=tmp_dir)
     try:
         yield tmp_path
